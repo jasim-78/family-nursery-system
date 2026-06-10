@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@theme {
+  /* Green Nursery Palette */
+  --color-nursery-50: #f4f9f4;
+  --color-nursery-100: #e3efe3;
+  --color-nursery-200: #c6dfc6;
+  --color-nursery-300: #9ec59e;
+  --color-nursery-400: #71a371;
+  --color-nursery-500: #528552;
+  --color-nursery-600: #3f683f;
+  --color-nursery-700: #345334;
+  --color-nursery-800: #2b432b;
+  --color-nursery-900: #243724;
+  --color-nursery-950: #101c10;
+
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+
+  --color-forest-900: #064e3b;
+  --color-forest-950: #022c22;
+
+  --color-soil-100: #f5f2eb;
+  --color-soil-500: #8b5a2b;
+  --color-soil-600: #70441e;
+  --color-soil-700: #5c3514;
+
+  --font-sans: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Outfit', 'Playfair Display', serif;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased font-sans min-h-screen selection:bg-emerald-200;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth Transitions */
+.transition-all-300 {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.04);
+}
+
+.dark-glass-card {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulseBorder {
+  0%, 100% { border-color: rgba(16, 185, 129, 0.3); }
+  50% { border-color: rgba(16, 185, 129, 0.8); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.3s ease-out forwards;
+}
+
+.pulse-border-alert {
+  animation: pulseBorder 2s infinite ease-in-out;
+}
+
+/* Glass side panel shadow overlay */
+.sidebar-shadow {
+  box-shadow: 4px 0 24px -4px rgba(21, 80, 52, 0.06);
+}
