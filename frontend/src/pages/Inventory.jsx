@@ -279,7 +279,7 @@ const Inventory = () => {
                   <th className="px-6 py-4">Item Name</th>
                   <th className="px-6 py-4">Category</th>
                   <th className="px-6 py-4">Available Qty</th>
-                  <th className="px-6 py-4">Buying Price</th>
+                  {isAdmin && <th className="px-6 py-4">Buying Price</th>}
                   <th className="px-6 py-4">Selling Price</th>
                   <th className="px-6 py-4">Supplier</th>
                   <th className="px-6 py-4">Status</th>
@@ -292,17 +292,9 @@ const Inventory = () => {
                   return (
                     <tr key={item._id} className="hover:bg-slate-50/50 transition-all-300">
                       <td className="px-6 py-4 font-semibold text-slate-800">{item.itemName}</td>
-                      <td className="px-6 py-4">
-                        <span className="inline-flex px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-semibold">
-                          {item.category}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className={isLow ? 'text-rose-600 font-bold' : ''}>
-                          {item.quantity} {item.unit}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">₹{item.buyingPrice.toFixed(2)}</td>
+                      <td className="px-6 py-4"><span className="inline-flex px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-semibold">{item.category}</span></td>
+                      <td className="px-6 py-4"><span className={isLow ? 'text-rose-600 font-bold' : ''}>{item.quantity} {item.unit}</span></td>
+                      {isAdmin && <td className="px-6 py-4">₹{item.buyingPrice.toFixed(2)}</td>}
                       <td className="px-6 py-4">₹{item.sellingPrice.toFixed(2)}</td>
                       <td className="px-6 py-4 text-slate-500">{item.supplier?.supplierName || 'N/A'}</td>
                       <td className="px-6 py-4">

@@ -264,7 +264,7 @@ const PlantLoss = () => {
                   <option value="">-- Choose Stock Item --</option>
                   {inventoryItems.map((item) => (
                     <option key={item._id} value={item._id} disabled={item.quantity <= 0}>
-                      {item.itemName} - {item.quantity} {item.unit} in stock (Buying: ₹{item.buyingPrice.toFixed(2)})
+                      {item.itemName} - {item.quantity} {item.unit} in stock{isAdmin ? ` (Buying: ₹${item.buyingPrice.toFixed(2)})` : ''}
                     </option>
                   ))}
                 </select>
