@@ -24,16 +24,10 @@ import Settings from './pages/Settings';
 const Layout = ({ children, title }) => {
   return (
     <div className="min-h-screen bg-slate-50 flex">
-      {/* Sidebar Panel */}
       <Sidebar />
-
-      {/* Main Panel Content Container */}
-      <div className="flex-1 pl-64 flex flex-col min-h-screen">
-        {/* Top Navbar */}
+      <div className="flex-1 lg:pl-64 flex flex-col min-h-screen">
         <Navbar title={title} />
-
-        {/* Inner Main Content */}
-        <main className="flex-1 p-8 mt-16 overflow-y-auto">
+        <main className="flex-1 p-4 md:p-8 mt-16 overflow-y-auto">
           {children}
         </main>
       </div>

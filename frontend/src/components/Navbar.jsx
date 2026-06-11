@@ -35,10 +35,10 @@ const Navbar = ({ title }) => {
   }, [user]);
 
   return (
-    <header className="h-16 bg-white border-b border-slate-100 flex items-center justify-between px-8 fixed top-0 right-0 left-64 z-10 shadow-sm shadow-slate-100/40">
+    <header className="h-16 bg-white border-b border-slate-100 flex items-center justify-between px-4 md:px-8 fixed top-0 right-0 left-0 lg:left-64 z-10 shadow-sm shadow-slate-100/40">
       {/* Title */}
-      <div>
-        <h2 className="text-xl font-bold text-slate-800 tracking-tight font-heading">{title || 'Nursery Admin'}</h2>
+      <div className="ml-12 lg:ml-0">
+        <h2 className="text-base md:text-xl font-bold text-slate-800 tracking-tight font-heading">{title || 'Nursery Admin'}</h2>
       </div>
 
       {/* Action Indicators */}

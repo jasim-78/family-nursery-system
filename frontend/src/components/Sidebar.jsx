@@ -1,33 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
-  LayoutDashboard,
-  Leaf,
-  DollarSign,
-  ShoppingCart,
-  Truck,
-  CreditCard,
-  AlertTriangle,
-  Users,
-  CalendarCheck,
-  BellRing,
-  BarChart3,
-  Settings,
-  LogOut,
-  Flower2
+  LayoutDashboard, Leaf, DollarSign, ShoppingCart, Truck,
+  CreditCard, AlertTriangle, Users, CalendarCheck, BellRing,
+  BarChart3, Settings, LogOut, Flower2, Menu, X
 } from 'lucide-react';
 
 const Sidebar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
-  // Define links based on roles
   const adminLinks = [
     { to: '/', label: 'Dashboard', icon: LayoutDashboard },
     { to: '/inventory', label: 'Inventory', icon: Leaf },
@@ -54,24 +43,31 @@ const Sidebar = () => {
 
   const links = user?.role === 'admin' ? adminLinks : staffLinks;
 
-  return (
-    <div className="w-64 bg-forest-950 text-slate-100 flex flex-col h-screen fixed left-0 top-0 sidebar-shadow z-20">
-      {/* Brand Logo */}
-      <div className="p-6 border-b border-forest-900 flex items-center space-x-3 bg-gradient-to-r from-forest-950 to-nursery-950">
-        <Flower2 className="w-8 h-8 text-emerald-400 stroke-[1.5]" />
-        <div>
-          <h1 className="text-lg font-bold tracking-tight text-white font-heading leading-tight">Family Nursery</h1>
-          <span className="text-xs text-emerald-400/80 font-medium tracking-wide">MANAGEMENT SYSTEM</span>
+  const SidebarContent = () => (
+    <div className="w-64 bg-forest-950 text-slate-100 flex flex-col h-full">
+      {/* Brand */}
+      <div className="p-6 border-b border-forest-900 flex items-center justify-between bg-gradient-to-r from-forest-950 to-nursery-950">
+        <div className="flex items-center space-x-3">
+          <Flower2 className="w-8 h-8 text-emerald-400 stroke-[1.5]" />
+          <div>
+            <h1 className="text-lg font-bold tracking-tight text-white font-heading leading-tight">Family Nursery</h1>
+            <span className="text-xs text-emerald-400/80 font-medium tracking-wide">MANAGEMENT SYSTEM</span>
+          </div>
         </div>
+        {/* Close button mobile only */}
+        <button onClick={() => setOpen(false)} className="lg:hidden p-1 text-slate-400 hover:text-white">
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
-      {/* Navigation Menu */}
+      {/* Nav Links */}
       <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-1">
         {links.map((link) => (
           <NavLink
             key={link.to}
             to={link.to}
             end={link.to === '/' || link.to === '/staff-dashboard'}
+            onClick={() => setOpen(false)}
             className={({ isActive }) =>
               `flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all-300 ${
                 isActive
@@ -86,7 +82,7 @@ const Sidebar = () => {
         ))}
       </nav>
 
-      {/* User Session Info */}
+      {/* User Info */}
       <div className="p-4 border-t border-forest-900 bg-nursery-950/40">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3 overflow-hidden">
@@ -108,6 +104,36 @@ const Sidebar = () => {
         </div>
       </div>
     </div>
+  );
+
+  return (
+    <>
+      {/* Mobile Hamburger Button */}
+      <button
+        onClick={() => setOpen(true)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-forest-950 text-white rounded-xl shadow-lg"
+      >
+        <Menu className="w-5 h-5" />
+      </button>
+
+      {/* Mobile Overlay */}
+      {open && (
+        <div
+          className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+          onClick={() => setOpen(false)}
+        />
+      )}
+
+      {/* Mobile Drawer */}
+      <div className={`lg:hidden fixed top-0 left-0 h-full z-50 transition-transform duration-300 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
+        <SidebarContent />
+      </div>
+
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:flex fixed left-0 top-0 h-screen z-20 sidebar-shadow">
+        <SidebarContent />
+      </div>
+    </>
   );
 };
 
