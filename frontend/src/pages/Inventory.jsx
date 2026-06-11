@@ -205,7 +205,7 @@ const Inventory = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col md:flex-row md:items-center gap-4">
+      <div className="bg-white p-4 md:p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col gap-3">
         {/* Search */}
         <form onSubmit={handleSearchSubmit} className="flex-1 relative">
           <input
@@ -224,44 +224,46 @@ const Inventory = () => {
           </button>
         </form>
 
-        {/* Category Filter */}
-        <div className="relative shrink-0 min-w-48">
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full px-4 py-3 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:border-emerald-500 appearance-none bg-white font-medium text-slate-600 transition-all-300 pr-10 cursor-pointer"
-          >
-            <option value="">All Categories</option>
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </select>
-          <ChevronDown className="absolute right-4 top-4 w-4 h-4 text-slate-400 pointer-events-none" />
+        <div className="flex flex-wrap gap-3">
+          {/* Category Filter */}
+          <div className="relative flex-1 min-w-[140px]">
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="w-full px-4 py-3 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:border-emerald-500 appearance-none bg-white font-medium text-slate-600 transition-all-300 pr-10 cursor-pointer"
+            >
+              <option value="">All Categories</option>
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-4 top-4 w-4 h-4 text-slate-400 pointer-events-none" />
+          </div>
+
+          {/* Low Stock Toggle */}
+          <label className="flex items-center space-x-2.5 select-none cursor-pointer p-2 rounded-xl hover:bg-slate-50 transition-all-300">
+            <input
+              type="checkbox"
+              checked={showLowStockOnly}
+              onChange={(e) => setShowLowStockOnly(e.target.checked)}
+              className="w-4 h-4 rounded text-rose-600 border-slate-300 focus:ring-rose-500 cursor-pointer"
+            />
+            <span className="text-xs font-semibold text-rose-600 flex items-center space-x-1">
+              <AlertTriangle className="w-4 h-4 shrink-0" />
+              <span>Low Stock Only</span>
+            </span>
+          </label>
+
+          {/* Clear Filters */}
+          {(selectedCategory || searchTerm || showLowStockOnly) && (
+            <button
+              onClick={() => { setSelectedCategory(''); setSearchTerm(''); setShowLowStockOnly(false); }}
+              className="text-xs font-semibold text-slate-500 hover:text-slate-700 cursor-pointer flex items-center space-x-1 underline self-center"
+            >
+              Clear Filters
+            </button>
+          )}
         </div>
-
-        {/* Low Stock Toggle */}
-        <label className="flex items-center space-x-2.5 shrink-0 select-none cursor-pointer p-2 rounded-xl hover:bg-slate-50 transition-all-300">
-          <input
-            type="checkbox"
-            checked={showLowStockOnly}
-            onChange={(e) => setShowLowStockOnly(e.target.checked)}
-            className="w-4 h-4 rounded text-rose-600 border-slate-300 focus:ring-rose-500 cursor-pointer"
-          />
-          <span className="text-xs font-semibold text-rose-600 flex items-center space-x-1">
-            <AlertTriangle className="w-4 h-4 shrink-0" />
-            <span>Low Stock Alerts Only</span>
-          </span>
-        </label>
-
-        {/* Clear Filters */}
-        {(selectedCategory || searchTerm || showLowStockOnly) && (
-          <button
-            onClick={() => { setSelectedCategory(''); setSearchTerm(''); setShowLowStockOnly(false); }}
-            className="text-xs font-semibold text-slate-500 hover:text-slate-700 cursor-pointer flex items-center space-x-1 underline"
-          >
-            Clear Filters
-          </button>
-        )}
       </div>
 
       {/* Inventory Table */}
@@ -273,7 +275,7 @@ const Inventory = () => {
           </div>
         ) : items.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-left border-collapse mobile-table-card">
               <thead>
                 <tr className="bg-slate-50/75 border-b border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">
                   <th className="px-6 py-4">Item Name</th>
@@ -291,13 +293,13 @@ const Inventory = () => {
                   const isLow = item.quantity <= item.minimumStock;
                   return (
                     <tr key={item._id} className="hover:bg-slate-50/50 transition-all-300">
-                      <td className="px-6 py-4 font-semibold text-slate-800">{item.itemName}</td>
-                      <td className="px-6 py-4"><span className="inline-flex px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-semibold">{item.category}</span></td>
-                      <td className="px-6 py-4"><span className={isLow ? 'text-rose-600 font-bold' : ''}>{item.quantity} {item.unit}</span></td>
-                      {isAdmin && <td className="px-6 py-4">₹{item.buyingPrice.toFixed(2)}</td>}
-                      <td className="px-6 py-4">₹{item.sellingPrice.toFixed(2)}</td>
-                      <td className="px-6 py-4 text-slate-500">{item.supplier?.supplierName || 'N/A'}</td>
-                      <td className="px-6 py-4">
+                      <td data-label="Item" className="px-6 py-4 font-semibold text-slate-800">{item.itemName}</td>
+                      <td data-label="Category" className="px-6 py-4"><span className="inline-flex px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-semibold">{item.category}</span></td>
+                      <td data-label="Qty" className="px-6 py-4"><span className={isLow ? 'text-rose-600 font-bold' : ''}>{item.quantity} {item.unit}</span></td>
+                      {isAdmin && <td data-label="Buy Price" className="px-6 py-4">₹{item.buyingPrice.toFixed(2)}</td>}
+                      <td data-label="Sell Price" className="px-6 py-4">₹{item.sellingPrice.toFixed(2)}</td>
+                      <td data-label="Supplier" className="px-6 py-4 text-slate-500">{item.supplier?.supplierName || 'N/A'}</td>
+                      <td data-label="Status" className="px-6 py-4">
                         {isLow ? (
                           <span className="inline-flex items-center space-x-1 px-2.5 py-1 bg-rose-50 border border-rose-100 rounded-full text-xs font-bold text-rose-700">
                             <AlertTriangle className="w-3 h-3 stroke-[2.5]" />
@@ -310,8 +312,8 @@ const Inventory = () => {
                         )}
                       </td>
                       {isAdmin && (
-                        <td className="px-6 py-4">
-                          <div className="flex justify-center items-center space-x-2">
+                        <td data-label="Actions" className="px-6 py-4">
+                          <div className="flex items-center space-x-2">
                             <button
                               onClick={() => handleEditClick(item)}
                               className="p-2 text-slate-400 hover:text-emerald-600 hover:bg-slate-100 rounded-xl transition-all-300 cursor-pointer"
@@ -345,7 +347,7 @@ const Inventory = () => {
       {/* Add Item Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl border border-slate-100 shadow-2xl max-w-lg w-full overflow-hidden animate-scale-up">
+          <div className="bg-white rounded-3xl border border-slate-100 shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto animate-scale-up">
             <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
               <h3 className="text-lg font-bold text-slate-800 font-heading">Add Stock Item</h3>
               <button onClick={() => setShowAddModal(false)} className="p-1 rounded-lg hover:bg-slate-200 transition-all-300 cursor-pointer">
@@ -478,7 +480,7 @@ const Inventory = () => {
       {/* Edit Item Modal */}
       {showEditModal && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl border border-slate-100 shadow-2xl max-w-lg w-full overflow-hidden animate-scale-up">
+          <div className="bg-white rounded-3xl border border-slate-100 shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto animate-scale-up">
             <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
               <h3 className="text-lg font-bold text-slate-800 font-heading">Edit Stock Item</h3>
               <button onClick={() => setShowEditModal(false)} className="p-1 rounded-lg hover:bg-slate-200 transition-all-300 cursor-pointer">

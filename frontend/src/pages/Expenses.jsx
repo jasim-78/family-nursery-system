@@ -154,7 +154,7 @@ const Expenses = () => {
           </div>
         ) : expenses.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-left border-collapse mobile-table-card">
               <thead>
                 <tr className="bg-slate-50/75 border-b border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">
                   <th className="px-6 py-4">Expense Date</th>
@@ -169,20 +169,20 @@ const Expenses = () => {
               <tbody className="divide-y divide-slate-50 text-sm font-medium text-slate-700">
                 {expenses.map((exp) => (
                   <tr key={exp._id} className="hover:bg-slate-50/50 transition-all-300">
-                    <td className="px-6 py-4 text-slate-500">
+                    <td data-label="Date" className="px-6 py-4 text-slate-500">
                       {new Date(exp.date).toLocaleDateString(undefined, { dateStyle: 'medium' })}
                     </td>
-                    <td className="px-6 py-4 font-semibold text-slate-800">{exp.title}</td>
-                    <td className="px-6 py-4">
+                    <td data-label="Title" className="px-6 py-4 font-semibold text-slate-800">{exp.title}</td>
+                    <td data-label="Category" className="px-6 py-4">
                       <span className="inline-flex px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-semibold">
                         {exp.category}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-rose-600 font-bold">₹{exp.amount.toFixed(2)}</td>
-                    <td className="px-6 py-4 text-slate-500 max-w-48 truncate" title={exp.note}>{exp.note || '-'}</td>
-                    <td className="px-6 py-4 text-slate-500">{exp.addedBy?.name || 'System'}</td>
-                    <td className="px-6 py-4">
-                      <div className="flex justify-center items-center space-x-2">
+                    <td data-label="Amount" className="px-6 py-4 text-rose-600 font-bold">₹{exp.amount.toFixed(2)}</td>
+                    <td data-label="Notes" className="px-6 py-4 text-slate-500 max-w-48 truncate" title={exp.note}>{exp.note || '-'}</td>
+                    <td data-label="By" className="px-6 py-4 text-slate-500">{exp.addedBy?.name || 'System'}</td>
+                    <td data-label="Actions" className="px-6 py-4">
+                      <div className="flex items-center space-x-2">
                         <button
                           onClick={() => handleEditClick(exp)}
                           className="p-2 text-slate-400 hover:text-emerald-600 hover:bg-slate-100 rounded-xl transition-all-300 cursor-pointer"

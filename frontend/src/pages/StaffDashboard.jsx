@@ -115,19 +115,19 @@ const StaffDashboard = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Top Banner */}
-      <div className="flex justify-between items-center bg-gradient-to-r from-nursery-700 to-emerald-600 p-6 rounded-3xl text-white shadow-xl">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 bg-gradient-to-r from-nursery-700 to-emerald-600 p-5 rounded-3xl text-white shadow-xl">
         <div>
-          <h2 className="text-2xl font-bold font-heading">Welcome back, {user?.name}</h2>
-          <p className="text-emerald-50/90 text-sm mt-1 font-medium">Have a wonderful day taking care of the plants and supporting our customers!</p>
+          <h2 className="text-xl font-bold font-heading">Welcome back, {user?.name}</h2>
+          <p className="text-emerald-50/90 text-xs mt-1 font-medium">Have a wonderful day taking care of the plants!</p>
         </div>
-        <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl flex items-center space-x-2 border border-white/10">
-          <Calendar className="w-5 h-5" />
-          <span className="text-sm font-semibold">{new Date().toLocaleDateString(undefined, { dateStyle: 'medium' })}</span>
+        <div className="bg-white/10 backdrop-blur-md px-3 py-2 rounded-2xl flex items-center space-x-2 border border-white/10 self-start sm:self-auto">
+          <Calendar className="w-4 h-4" />
+          <span className="text-xs font-semibold">{new Date().toLocaleDateString(undefined, { dateStyle: 'medium' })}</span>
         </div>
       </div>
 
       {/* Grid Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6">
         {cards.map((card, i) => (
           <div key={i} className={`p-5 rounded-2xl border border-slate-100 ${card.color} flex flex-col justify-between shadow-sm bg-white`}>
             <div className="flex justify-between items-start">

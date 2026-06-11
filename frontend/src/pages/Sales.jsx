@@ -163,7 +163,7 @@ const Sales = () => {
           </div>
         ) : filteredSales.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-left border-collapse mobile-table-card">
               <thead>
                 <tr className="bg-slate-50/75 border-b border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">
                   <th className="px-6 py-4">Date</th>
@@ -178,15 +178,15 @@ const Sales = () => {
               <tbody className="divide-y divide-slate-50 text-sm font-medium text-slate-700">
                 {filteredSales.map((sale) => (
                   <tr key={sale._id} className="hover:bg-slate-50/50 transition-all-300">
-                    <td className="px-6 py-4 text-slate-500">{new Date(sale.date).toLocaleDateString(undefined, { dateStyle: 'medium' })}</td>
-                    <td className="px-6 py-4 font-semibold text-slate-800">{sale.itemId?.itemName || <span className="text-rose-500 italic">Deleted Item</span>}</td>
-                    <td className="px-6 py-4">{sale.quantitySold} {sale.itemId?.unit || 'pcs'}</td>
-                    <td className="px-6 py-4">₹{sale.sellingPrice.toFixed(2)}</td>
-                    <td className="px-6 py-4 text-emerald-600 font-bold">₹{sale.totalAmount.toFixed(2)}</td>
-                    <td className="px-6 py-4 text-slate-500">{sale.soldBy?.name || 'System'}</td>
+                    <td data-label="Date" className="px-6 py-4 text-slate-500">{new Date(sale.date).toLocaleDateString(undefined, { dateStyle: 'medium' })}</td>
+                    <td data-label="Item" className="px-6 py-4 font-semibold text-slate-800">{sale.itemId?.itemName || <span className="text-rose-500 italic">Deleted Item</span>}</td>
+                    <td data-label="Qty" className="px-6 py-4">{sale.quantitySold} {sale.itemId?.unit || 'pcs'}</td>
+                    <td data-label="Unit Price" className="px-6 py-4">₹{sale.sellingPrice.toFixed(2)}</td>
+                    <td data-label="Total" className="px-6 py-4 text-emerald-600 font-bold">₹{sale.totalAmount.toFixed(2)}</td>
+                    <td data-label="Sold By" className="px-6 py-4 text-slate-500">{sale.soldBy?.name || 'System'}</td>
                     {isAdmin && (
-                      <td className="px-6 py-4">
-                        <div className="flex justify-center">
+                      <td data-label="Actions" className="px-6 py-4">
+                        <div className="flex">
                           <button onClick={() => handleDeleteClick(sale._id)} className="p-2 text-slate-400 hover:text-rose-600 hover:bg-slate-100 rounded-xl transition-all-300 cursor-pointer">
                             <Trash2 className="w-4 h-4" />
                           </button>

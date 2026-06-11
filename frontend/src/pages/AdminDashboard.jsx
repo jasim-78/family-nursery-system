@@ -139,29 +139,29 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Top Banner */}
-      <div className="flex justify-between items-center bg-gradient-to-r from-forest-900 to-nursery-700 p-6 rounded-3xl text-white shadow-xl shadow-nursery-950/10">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 bg-gradient-to-r from-forest-900 to-nursery-700 p-5 rounded-3xl text-white shadow-xl shadow-nursery-950/10">
         <div>
-          <h2 className="text-2xl font-bold font-heading">Lush Greenhouse Overview</h2>
-          <p className="text-emerald-100/90 text-sm mt-1 font-medium">Here is the latest financial and operational status of your Family Nursery.</p>
+          <h2 className="text-xl font-bold font-heading">Lush Greenhouse Overview</h2>
+          <p className="text-emerald-100/90 text-xs mt-1 font-medium">Latest financial and operational status.</p>
         </div>
-        <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl flex items-center space-x-2 border border-white/10">
-          <CalendarDays className="w-5 h-5" />
-          <span className="text-sm font-semibold">{new Date().toLocaleDateString(undefined, { dateStyle: 'medium' })}</span>
+        <div className="bg-white/10 backdrop-blur-md px-3 py-2 rounded-2xl flex items-center space-x-2 border border-white/10 self-start sm:self-auto">
+          <CalendarDays className="w-4 h-4" />
+          <span className="text-xs font-semibold">{new Date().toLocaleDateString(undefined, { dateStyle: 'medium' })}</span>
         </div>
       </div>
 
       {/* Grid Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6">
         {cards.map((card, i) => (
-          <div key={i} className={`p-5 rounded-2xl border ${card.color} flex flex-col justify-between shadow-sm bg-white`}>
+          <div key={i} className={`p-4 rounded-2xl border ${card.color} flex flex-col justify-between shadow-sm bg-white`}>
             <div className="flex justify-between items-start">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide leading-tight">{card.title}</span>
               <div className="p-2 rounded-xl bg-white border border-slate-100 shadow-sm shrink-0">
                 <card.icon className="w-5 h-5 stroke-[1.6]" />
               </div>
             </div>
-            <div className="mt-4">
-              <span className="text-2xl font-bold text-slate-800 tracking-tight font-heading">{card.value}</span>
+            <div className="mt-3">
+              <span className="text-lg md:text-2xl font-bold text-slate-800 tracking-tight font-heading">{card.value}</span>
             </div>
           </div>
         ))}
@@ -188,7 +188,7 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <div className="h-80">
+          <div className="h-48 md:h-80">
             {monthlyTimelineData.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={monthlyTimelineData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>

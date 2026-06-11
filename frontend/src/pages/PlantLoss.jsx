@@ -166,7 +166,7 @@ const PlantLoss = () => {
           </div>
         ) : losses.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-left border-collapse mobile-table-card">
               <thead>
                 <tr className="bg-slate-50/75 border-b border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">
                   <th className="px-6 py-4">Report Date</th>
@@ -182,16 +182,16 @@ const PlantLoss = () => {
               <tbody className="divide-y divide-slate-50 text-sm font-medium text-slate-700">
                 {losses.map((loss) => (
                   <tr key={loss._id} className="hover:bg-slate-50/50 transition-all-300">
-                    <td className="px-6 py-4 text-slate-500">
+                    <td data-label="Date" className="px-6 py-4 text-slate-500">
                       {new Date(loss.date).toLocaleDateString(undefined, { dateStyle: 'medium' })}
                     </td>
-                    <td className="px-6 py-4 font-semibold text-slate-800">
+                    <td data-label="Item" className="px-6 py-4 font-semibold text-slate-800">
                       {loss.itemId?.itemName || <span className="text-rose-500 italic">Deleted Item</span>}
                     </td>
-                    <td className="px-6 py-4">
+                    <td data-label="Qty Lost" className="px-6 py-4">
                       {loss.quantityLost} {loss.itemId?.unit || 'pcs'}
                     </td>
-                    <td className="px-6 py-4">
+                    <td data-label="Loss Type" className="px-6 py-4">
                       <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-bold ${
                         loss.lossType === 'Dead' ? 'bg-slate-100 text-slate-700' :
                         loss.lossType === 'Damaged' ? 'bg-amber-50 text-amber-700 border border-amber-100' :
@@ -202,24 +202,24 @@ const PlantLoss = () => {
                         {loss.lossType}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-rose-600 font-bold">₹{loss.estimatedLossAmount.toFixed(2)}</td>
-                    <td className="px-6 py-4">
+                    <td data-label="Loss Amt" className="px-6 py-4 text-rose-600 font-bold">₹{loss.estimatedLossAmount.toFixed(2)}</td>
+                    <td data-label="Photo" className="px-6 py-4">
                       {loss.photoUrl ? (
                         <button
                           onClick={() => setPreviewImage(`${loss.photoUrl}`)}
                           className="flex items-center space-x-1 px-2.5 py-1.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-xl text-xs font-bold text-slate-600 transition-all-300 cursor-pointer"
                         >
                           <Eye className="w-3.5 h-3.5" />
-                          <span>View Image</span>
+                          <span>View</span>
                         </button>
                       ) : (
-                        <span className="text-xs text-slate-400 italic font-medium">No Attachment</span>
+                        <span className="text-xs text-slate-400 italic font-medium">None</span>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-slate-500">{loss.addedBy?.name || 'System'}</td>
+                    <td data-label="Logged By" className="px-6 py-4 text-slate-500">{loss.addedBy?.name || 'System'}</td>
                     {isAdmin && (
-                      <td className="px-6 py-4">
-                        <div className="flex justify-center items-center">
+                      <td data-label="Actions" className="px-6 py-4">
+                        <div className="flex items-center">
                           <button
                             onClick={() => handleDeleteClick(loss._id)}
                             className="p-2 text-slate-400 hover:text-rose-600 hover:bg-slate-100 rounded-xl transition-all-300 cursor-pointer"

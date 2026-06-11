@@ -153,22 +153,24 @@ const ServiceReminders = () => {
       </div>
 
       {/* Filter Options */}
-      <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-3">
-        <span className="text-xs font-bold text-slate-400 uppercase tracking-wide">Status:</span>
-        <div className="flex space-x-2">
-          {['', 'pending', 'completed', 'cancelled'].map((status) => (
-            <button
-              key={status}
-              onClick={() => setStatusFilter(status)}
-              className={`px-4 py-1.5 rounded-xl text-xs font-semibold capitalize transition-all-300 cursor-pointer ${
-                statusFilter === status
-                  ? 'bg-emerald-600 text-white shadow-sm'
-                  : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
-              }`}
-            >
-              {status === '' ? 'All Bookings' : status}
-            </button>
-          ))}
+      <div className="bg-white p-4 md:p-6 rounded-3xl border border-slate-100 shadow-sm">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-wide shrink-0">Status:</span>
+          <div className="flex flex-wrap gap-2">
+            {['', 'pending', 'completed', 'cancelled'].map((status) => (
+              <button
+                key={status}
+                onClick={() => setStatusFilter(status)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold capitalize transition-all-300 cursor-pointer ${
+                  statusFilter === status
+                    ? 'bg-emerald-600 text-white shadow-sm'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
+                }`}
+              >
+                {status === '' ? 'All' : status}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -181,7 +183,7 @@ const ServiceReminders = () => {
           </div>
         ) : reminders.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-left border-collapse mobile-table-card">
               <thead>
                 <tr className="bg-slate-50/75 border-b border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">
                   <th className="px-6 py-4">Service Schedule</th>
@@ -198,7 +200,7 @@ const ServiceReminders = () => {
                   const isAssignedToMe = rem.assignedTo?._id === user._id;
                   return (
                     <tr key={rem._id} className={`hover:bg-slate-50/50 transition-all-300 ${isAssignedToMe && rem.status === 'pending' ? 'bg-emerald-50/25 pulse-border-alert' : ''}`}>
-                      <td className="px-6 py-4 text-slate-500">
+                      <td data-label="Schedule" className="px-6 py-4 text-slate-500">
                         <div className="flex items-center space-x-1.5 font-semibold text-slate-700">
                           <Calendar className="w-4 h-4 text-slate-400" />
                           <span>{new Date(rem.reminderDate).toLocaleDateString(undefined, { dateStyle: 'medium' })}</span>
@@ -208,26 +210,26 @@ const ServiceReminders = () => {
                           <span>{rem.reminderTime || 'N/A'}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td data-label="Customer" className="px-6 py-4">
                         <p className="font-semibold text-slate-800 leading-tight">{rem.customerName}</p>
                         <div className="flex items-center space-x-1 text-xs text-slate-400 font-semibold mt-1">
                           <Phone className="w-3.5 h-3.5" />
                           <span>{rem.phoneNumber}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td data-label="Service" className="px-6 py-4">
                         <span className="inline-flex px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-semibold">
                           {rem.serviceType}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-slate-500 max-w-48 truncate" title={rem.address}>{rem.address || '-'}</td>
-                      <td className="px-6 py-4">
+                      <td data-label="Address" className="px-6 py-4 text-slate-500 max-w-48 truncate" title={rem.address}>{rem.address || '-'}</td>
+                      <td data-label="Assigned" className="px-6 py-4">
                         <span className="flex items-center space-x-1.5 text-xs font-semibold text-slate-600">
                           <User className="w-4 h-4 text-slate-400" />
                           <span>{rem.assignedTo?.name || 'Unassigned'}</span>
                         </span>
                       </td>
-                      <td className="px-6 py-4">
+                      <td data-label="Status" className="px-6 py-4">
                         <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-bold ${
                           rem.status === 'pending' ? 'bg-amber-50 text-amber-700 border border-amber-100' :
                           rem.status === 'completed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' :
@@ -236,8 +238,8 @@ const ServiceReminders = () => {
                           {rem.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
-                        <div className="flex justify-center items-center space-x-2">
+                      <td data-label="Actions" className="px-6 py-4">
+                        <div className="flex items-center space-x-2">
                           {rem.status === 'pending' && (
                             <>
                               <button

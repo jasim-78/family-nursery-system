@@ -188,20 +188,20 @@ const Attendance = () => {
         {/* Right Side: Attendance Logs & Filter */}
         <div className="lg:col-span-2 space-y-6">
           {/* Filters Bar */}
-          <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-wrap items-center gap-4">
+          <div className="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm flex flex-wrap items-center gap-3">
             <div className="flex items-center space-x-1 text-xs font-bold text-slate-400 uppercase tracking-wider shrink-0">
               <Filter className="w-4 h-4 text-slate-400" />
-              <span>Filter Logs:</span>
+              <span>Filter:</span>
             </div>
 
             {isAdmin && (
-              <div className="shrink-0 min-w-44">
+              <div className="flex-1 min-w-[130px]">
                 <select
                   value={selectedStaffId}
                   onChange={(e) => setSelectedStaffId(e.target.value)}
                   className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-emerald-500 cursor-pointer bg-white"
                 >
-                  <option value="">All Staff Members</option>
+                  <option value="">All Staff</option>
                   {staffList.map((st) => (
                     <option key={st._id} value={st._id}>{st.name}</option>
                   ))}
@@ -209,7 +209,7 @@ const Attendance = () => {
               </div>
             )}
 
-            <div className="shrink-0 min-w-36">
+            <div className="flex-1 min-w-[110px]">
               <select
                 value={selectedMonth}
                 onChange={(e) => setSelectedMonth(parseInt(e.target.value, 10))}
@@ -221,7 +221,7 @@ const Attendance = () => {
               </select>
             </div>
 
-            <div className="shrink-0 min-w-28">
+            <div className="flex-1 min-w-[80px]">
               <select
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(parseInt(e.target.value, 10))}
@@ -242,7 +242,7 @@ const Attendance = () => {
               </div>
             ) : records.length > 0 ? (
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+                <table className="w-full text-left border-collapse mobile-table-card">
                   <thead>
                     <tr className="bg-slate-50/75 border-b border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">
                       <th className="px-6 py-4">Calendar Date</th>
@@ -254,16 +254,18 @@ const Attendance = () => {
                   <tbody className="divide-y divide-slate-50 text-sm font-medium text-slate-700">
                     {records.map((rec) => (
                       <tr key={rec._id} className="hover:bg-slate-50/50 transition-all-300">
-                        <td className="px-6 py-4 text-slate-500 flex items-center space-x-2">
-                          <CalendarDays className="w-4 h-4 text-slate-400" />
-                          <span>{new Date(rec.date).toLocaleDateString(undefined, { dateStyle: 'medium' })}</span>
+                        <td data-label="Date" className="px-6 py-4 text-slate-500">
+                          <div className="flex items-center space-x-2">
+                            <CalendarDays className="w-4 h-4 text-slate-400 shrink-0" />
+                            <span>{new Date(rec.date).toLocaleDateString(undefined, { dateStyle: 'medium' })}</span>
+                          </div>
                         </td>
-                        <td className="px-6 py-4 font-semibold text-slate-800">{rec.staffId?.name || 'Deleted Account'}</td>
-                        <td className="px-6 py-4">
+                        <td data-label="Employee" className="px-6 py-4 font-semibold text-slate-800">{rec.staffId?.name || 'Deleted Account'}</td>
+                        <td data-label="Role" className="px-6 py-4">
                           <span className="capitalize text-slate-400 font-semibold text-xs">{rec.staffId?.role || 'staff'}</span>
                         </td>
-                        <td className="px-6 py-4">
-                          <div className="flex justify-center">
+                        <td data-label="Status" className="px-6 py-4">
+                          <div className="flex">
                             <span className={`inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
                               rec.status === 'present' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' :
                               rec.status === 'half-day' ? 'bg-amber-50 text-amber-700 border border-amber-100' :

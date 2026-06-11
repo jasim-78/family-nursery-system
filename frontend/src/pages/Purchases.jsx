@@ -189,7 +189,7 @@ const Purchases = () => {
           </div>
         ) : filteredPurchases.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-left border-collapse mobile-table-card">
               <thead>
                 <tr className="bg-slate-50/75 border-b border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">
                   <th className="px-6 py-4">Restock Date</th>
@@ -204,20 +204,20 @@ const Purchases = () => {
               <tbody className="divide-y divide-slate-50 text-sm font-medium text-slate-700">
                 {filteredPurchases.map((purchase) => (
                   <tr key={purchase._id} className="hover:bg-slate-50/50 transition-all-300">
-                    <td className="px-6 py-4 text-slate-500">
+                    <td data-label="Date" className="px-6 py-4 text-slate-500">
                       {new Date(purchase.date).toLocaleDateString(undefined, { dateStyle: 'medium' })}
                     </td>
-                    <td className="px-6 py-4 font-semibold text-slate-800">
+                    <td data-label="Item" className="px-6 py-4 font-semibold text-slate-800">
                       {purchase.itemId?.itemName || <span className="text-rose-500 italic">Deleted Item</span>}
                     </td>
-                    <td className="px-6 py-4">
+                    <td data-label="Qty" className="px-6 py-4">
                       {purchase.quantityPurchased} {purchase.itemId?.unit || 'pcs'}
                     </td>
-                    <td className="px-6 py-4">₹{purchase.buyingPrice.toFixed(2)}</td>
-                    <td className="px-6 py-4 text-rose-600 font-bold">₹{purchase.totalAmount.toFixed(2)}</td>
-                    <td className="px-6 py-4 text-slate-500">{purchase.supplierId?.supplierName || 'N/A'}</td>
-                    <td className="px-6 py-4">
-                      <div className="flex justify-center items-center">
+                    <td data-label="Unit Cost" className="px-6 py-4">₹{purchase.buyingPrice.toFixed(2)}</td>
+                    <td data-label="Total" className="px-6 py-4 text-rose-600 font-bold">₹{purchase.totalAmount.toFixed(2)}</td>
+                    <td data-label="Supplier" className="px-6 py-4 text-slate-500">{purchase.supplierId?.supplierName || 'N/A'}</td>
+                    <td data-label="Actions" className="px-6 py-4">
+                      <div className="flex items-center">
                         <button
                           onClick={() => handleDeleteClick(purchase._id)}
                           className="p-2 text-slate-400 hover:text-rose-600 hover:bg-slate-100 rounded-xl transition-all-300 cursor-pointer"

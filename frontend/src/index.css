@@ -33,8 +33,48 @@
 }
 
 @layer base {
-  body {
+  html, body {
     @apply bg-slate-50 text-slate-800 antialiased font-sans min-h-screen selection:bg-emerald-200;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+}
+
+/* Mobile responsive table → card view */
+@media (max-width: 640px) {
+  .mobile-table-card thead {
+    display: none;
+  }
+  .mobile-table-card tbody tr {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f1f5f9;
+    border-radius: 1rem;
+    margin-bottom: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: #fff;
+  }
+  .mobile-table-card tbody tr td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 0;
+    border: none;
+    font-size: 0.8rem;
+  }
+  .mobile-table-card tbody tr td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 }
 
